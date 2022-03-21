@@ -9,9 +9,29 @@ const defaultCartState = {
 
 const cartReducer = (state, action) => {
   if (action.type === 'ADD') {
-    const updatedItems = state.items.concat(action.item); //concat is a built in method in javascript which adds a new item to an array but unlike push it doesnt edit the existing array but returns a new array.
+    //concat is a built in method in javascript which adds a new item to an array but unlike push it doesnt edit the existing array but returns a new array.
     const updateTotalAmount =
       state.totalAmount + action.item.price * action.item.amount;
+
+    const existingCartItemIndex = state.items.findIndex(
+      (item) => item.id === action.item.id
+    );
+
+    const existingCartItem = state.items[existingCartItemIndex];
+    let updatedItems;
+
+    if (existingCartItem) {
+      const updatedItem = {
+        ...existingCartItem,
+        amount: existingCartItem.amount + action.item.amount,
+      };
+
+      updatedItems = [...state.items];
+      updatedItems[existingCartItemIndex] = updatedItem;
+    } else {
+      updatedItems = state.items.concat(action.item);
+    }
+
     return {
       items: updatedItems,
       totalAmount: updateTotalAmount,
@@ -37,7 +57,7 @@ const CartProvider = (props) => {
     items: cartState.items,
     totalAmount: cartState.totalAmount,
     addItem: addItemToCartHandler,
-    removeItems: removeItemFromCartHandler,
+    removeItem: removeItemFromCartHandler,
   };
 
   return (

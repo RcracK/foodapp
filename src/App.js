@@ -29,4 +29,4 @@ function App() {
 
 export default App;
 
-//<main></main> is a default  builtin html5 element
+//<main></main> is a default  built in html5 element
