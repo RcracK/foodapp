@@ -6,7 +6,7 @@ const defaultCartState = {
   items: [],
   totalAmount: 0,
 };
-
+// the action is dispatch by you later in your code and the state is simply the last state snapshot of the state managed by the reducer and part of the reducer function you have to return a new state snapshot.
 const cartReducer = (state, action) => {
   if (action.type === 'ADD') {
     //concat is a built in method in javascript which adds a new item to an array but unlike push it doesnt edit the existing array but returns a new array.
@@ -35,6 +35,26 @@ const cartReducer = (state, action) => {
     return {
       items: updatedItems,
       totalAmount: updateTotalAmount,
+    };
+  }
+
+  if (action.type === 'REMOVE') {
+    const existingCartItemIndex = state.items.findIndex(
+      (item) => item.id === action.id
+    );
+    const existingItem = state.items[existingCartItemIndex];
+    const updatedTotalAmount = state.totalAmount - existingItem.price; //total amount is definitely  decreases by the price of one single removed item.
+    let updatedItems;
+    if (existingItem.amount === 1) {
+      updatedItems = state.items.filter((item) => item.id !== action.id); //filter is  a built in methiod that returns a new array
+    } else {
+      const updatedItem = { ...existingItem, amount: existingItem.amount - 1 };
+      updatedItems = [...state.items];
+      updatedItems[existingCartItemIndex] = updatedItem;
+    }
+    return {
+      items: updatedItems,
+      totalAmount: updatedTotalAmount,
     };
   }
   return defaultCartState;

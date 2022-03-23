@@ -29,7 +29,7 @@ const MealItemForm = (props) => {
         ref={amountInputRef}
         label='Amount'
         input={{
-          id: 'amount_' + props.id,
+          id: 'amount',
           type: 'number',
           min: '1',
           max: '5',
