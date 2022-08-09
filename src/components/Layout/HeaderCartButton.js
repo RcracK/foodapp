@@ -1,8 +1,8 @@
-import { useContext, useEffect, useState } from 'react';
+import { useContext, useEffect, useState } from "react";
 
-import CartIcon from '../Cart/CartIcon';
-import CartContext from '../../store/cart-context';
-import classes from './HeaderCartButton.module.css';
+import CartIcon from "../Cart/CartIcon";
+import CartContext from "../../store/cart-context";
+import classes from "./HeaderCartButton.module.css";
 
 const HeaderCartButton = (props) => {
   const [btnIsHighlighted, setBtnIsHighlighted] = useState(false);
@@ -15,7 +15,7 @@ const HeaderCartButton = (props) => {
   }, 0);
 
   const btnClasses = `${classes.button} ${
-    btnIsHighlighted ? classes.bump : ''
+    btnIsHighlighted ? classes.bump : ""
   }`;
 
   useEffect(() => {
@@ -33,7 +33,7 @@ if you return a function in useEffect it will automatically be called as a  clea
     return () => {
       clearTimeout(timer);
     };
-  }, [items]);
+  }, [cartCtx, items]);
 
   return (
     <button className={btnClasses} onClick={props.onClick}>
